@@ -1,0 +1,94 @@
+<% layout ("/layouts/boilerplate.ejs")%>
+
+<body>
+  <h1 style="text-align: center">Update your details</h1>
+  <div class="add-place">
+    <form
+      method="post"
+      action="/list/<%=list._id%>?_method=PUT"
+      novalidate
+      class="needs-validation"
+    >
+      <div>
+        <label for="title" class="form-label">Title</label>
+        <input
+          name="title"
+          id="title"
+          type="text"
+          class="form-control"
+          value="<%= list.title %>"
+          required
+        />
+        <div class="valid-feedback">Valid title</div>
+        <div class="invalid-feedback">Invalid title</div>
+      </div>
+      <div>
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          name="description"
+          id="description"
+          class="form-control"
+          required
+          minlength="10"
+          maxlength="200"
+        >
+<%= list.description %>"</textarea
+        >
+        <div class="valid-feedback">Valid description</div>
+        <div class="invalid-feedback">
+          Description should be in between 10-200 words
+        </div>
+      </div>
+      <div>
+        <label for="price" class="form-label">Price</label>
+        <input
+          name="price"
+          class="form-control"
+          id="price"
+          min="1"
+          type="number"
+          value="<%= list.price %>"
+        />
+        <div class="valid-feedback">Valid price</div>
+        <div class="invalid-feedback">Price should be greater than 0</div>
+      </div>
+      <div>
+        <label for="location" class="form-label">Location</label>
+        <input
+          name="location"
+          class="form-control"
+          id="location"
+          type="text"
+          value="<%= list.location %>"
+        />
+        <div class="valid-feedback">Valid location</div>
+        <div class="invalid-feedback">Invalid location</div>
+      </div>
+      <div>
+        <label for="country" class="form-label"></label>
+        <input
+          class="form-control"
+          name="country"
+          id="country"
+          type="text"
+          value="<%= list.country %>"
+        />
+        <div class="valid-feedback">Valid country</div>
+        <div class="invalid-feedback">Invalid country</div>
+      </div>
+      <div>
+        <label for="image" class="form-label">Image url</label>
+        <input
+          name="image"
+          class="form-control"
+          id="image"
+          type="text"
+          value="<%= list.image %>"
+          placeholder="Enter image url"
+        />
+      </div>
+
+      <button class="btn btn-outline-success mt-3">Save</button>
+    </form>
+  </div>
+</body>

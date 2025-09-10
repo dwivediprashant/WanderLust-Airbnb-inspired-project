@@ -1,0 +1,48 @@
+const express = require("express");
+const router = express.Router({ mergeParams: true });
+const List = require("../models/list.js");
+const validatereview = require("../utils/validateReview.js");
+const Review = require("../models/review.js");
+
+//-------------review post route--------------
+router.post("/", validatereview, async (req, res, next) => {
+  try {
+    let { id } = req.params;
+    let list = await List.findById(id);
+    let { comment, rating } = req.body;
+    let newReview = new Review({
+      comment,
+      rating,
+    });
+    console.log(newReview);
+    list.reviews.push(newReview);
+    await newReview.save();
+    await list.save();
+    req.flash("addedReview", "Review added successfully !");
+    res.redirect(`/list/${list._id}`);
+  } catch (err) {
+    next(err);
+  }
+});
+//--------review delete route-----------------------
+router.delete("/:reviewId", async (req, res) => {
+  try {
+    let { id, reviewId } = req.params;
+    let pulledReviews = await List.findByIdAndUpdate(
+      id,
+      {
+        $pull: { reviews: reviewId },
+      },
+      { runValidators: true, new: true }
+    );
+    let deletedReview = await Review.findByIdAndDelete(reviewId);
+    console.log(deletedReview, " is delted review");
+    console.log(pulledReviews, " is pulled reviews");
+    req.flash("deletedReview", "Review deleted successfully !");
+    res.redirect(`/list/${id}`);
+  } catch (err) {
+    next(err);
+  }
+});
+
+module.exports = router;
