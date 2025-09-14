@@ -1,21 +1,22 @@
 const express = require("express");
 const List = require("../models/list.js");
-const validateList = require("../utils/validateList.js");
+const validateList = require("../middlewares/validateList.js");
 const router = express.Router({ mergeParams: true });
+const isLogin = require("../middlewares/isLogin.js");
+const isOwner = require("../middlewares/isOwner.js");
 
 ///-------index route-----------------------
 router.get("/", async (req, res, next) => {
   try {
-    let lists = await List.find().sort({ _id: -1 });
-    let createdFlash = req.flash("listCreated")[0];
-    let deletedFlash = req.flash("listDeleted")[0];
-    res.render("listing/list", { lists, createdFlash, deletedFlash });
+    // console.log(res.locals.currUser);
+    const lists = await List.find().sort({ _id: -1 });
+    res.render("listing/list", { lists });
   } catch (err) {
     next(err);
   }
 });
 //-------serve form for adding place------
-router.get("/new", (req, res) => {
+router.get("/new", isLogin, (req, res) => {
   res.render("listing/form.ejs");
 });
 //---------post(create) route------------
@@ -31,10 +32,11 @@ router.post("/", validateList, async (req, res, next) => {
       country,
       image,
     });
-
+    newList.owner = req.session.user._id; //current user ki id
     await newList.save();
     console.log(newList, " added succesfully!");
-    req.flash("listCreated", "New list added successfully !");
+    console.log(req.session, " request object");
+    req.flash("success", "New list added successfully !");
     res.redirect("/list");
   } catch (err) {
     // console.log(err);
@@ -42,7 +44,7 @@ router.post("/", validateList, async (req, res, next) => {
   }
 });
 //--------edit route-------
-router.get("/:id/edit", async (req, res, next) => {
+router.get("/:id/edit", isLogin, isOwner, async (req, res, next) => {
   try {
     let { id } = req.params;
     let list = await List.findById(id);
@@ -53,7 +55,7 @@ router.get("/:id/edit", async (req, res, next) => {
   }
 });
 //------update route----------
-router.put("/:id", validateList, async (req, res, next) => {
+router.put("/:id", isLogin, isOwner, validateList, async (req, res, next) => {
   try {
     let { id } = req.params;
     let { title, description, price, location, country, image } = req.body;
@@ -69,7 +71,7 @@ router.put("/:id", validateList, async (req, res, next) => {
       },
       { runValidators: true, new: true }
     );
-    req.flash("updatedList", "List updated successfully !");
+    req.flash("success", "List updated successfully !");
     res.redirect(`/list/${id}`);
   } catch (err) {
     // console.log(err);
@@ -77,13 +79,13 @@ router.put("/:id", validateList, async (req, res, next) => {
   }
 });
 //---------destroy route--------------
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isLogin, isOwner, async (req, res, next) => {
   try {
     let { id } = req.params;
     let deletedList = await List.findByIdAndDelete(id);
 
     console.log(deletedList, "deleted successfully!");
-    req.flash("listDeleted", "List deleted successfully !");
+    req.flash("success", "List deleted successfully !");
     res.redirect("/list");
   } catch (err) {
     // console.log(err);
@@ -94,15 +96,12 @@ router.delete("/:id", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     let { id } = req.params;
-    let list = await List.findById(id).populate("reviews").populate("owner");
-    let updatedFlash = req.flash("updatedList")[0];
-    let reviewFlash = req.flash("addedReview")[0];
-    let reviewDelFlash = req.flash("deletedReview")[0];
+    let list = await List.findById(id)
+      .populate({ path: "reviews", populate: { path: "revOwner" } })
+      .populate("owner");
+    console.log(list);
     res.render("listing/show.ejs", {
       list,
-      updatedFlash,
-      reviewFlash,
-      reviewDelFlash,
     });
   } catch (err) {
     // console.log(err);

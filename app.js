@@ -10,9 +10,11 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const User = require("./models/user.js");
 const bcrypt = require("bcrypt");
+const checkLogin = require("./middlewares/checkLogin.js");
 
 const listRouter = require("./routes/list.js");
 const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 const List = require("./models/list.js");
 
 app.set("view engine", "ejs");
@@ -47,56 +49,19 @@ app.use(
   })
 );
 app.use(flash()); //--------for pop up messages and  only once appear
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.info = req.flash("info");
+  res.locals.currUser = req.session.user;
+  next();
+});
 
 //------------routers----------------------
 app.use("/list", listRouter);
 app.use("/list/:id/review", reviewRouter);
-//-----------user register---------------------------------route---
-app.get("/register", (req, res) => {
-  res.render("users/regForm");
-});
-//-----register post route-------------
-app.post("/register", async (req, res, next) => {
-  try {
-    let { username, password } = req.body;
-    let hashedPass = await bcrypt.hash(password, 10);
-    let newUser = new User({
-      username,
-      password: hashedPass,
-    });
-    await newUser.save();
-    res.redirect("/login");
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-});
-//----------login route----------
-app.get("/login", (req, res) => {
-  res.render("users/loginForm");
-});
-//--login post route------
-app.post("/login", async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) {
-      // req.flash("userNotFound", "user not found !");
-      return res.redirect("/login");
-    }
-    // req.flash("reg-success", `welcome ${username} !`);
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.redirect("/login");
-    }
-    req.session.user = user;
-    console.log(req.session);
-    res.redirect("/list");
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-});
+app.use("/", userRouter);
+
 //--------------no route matched page not found!--------
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page not found!"));

@@ -4,7 +4,6 @@
   color: black !important;
   height: 5rem;
   margin-bottom: 1rem;
-  /* border-bottom: 1px solid gray; */
   box-shadow: 0 0 4px gainsboro;
   position: sticky;
   top: 0;
@@ -20,10 +19,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* justify-items: start; */
   flex-wrap: wrap;
   width: 100%;
-  /* background-color: green; */
 }
 .card {
   display: flex;
@@ -82,4 +79,19 @@
   border: 1px solid rgba(128, 128, 128, 0.377);
   border-radius: 0.5rem;
   color: gray;
+}
+.flash-alert {
+  width: 50%;
+  position: fixed;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.form {
+  display: flex;
+  justify-content: flex-end;
+}
+.form div {
+  width: 70%;
 }

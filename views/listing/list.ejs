@@ -2,16 +2,7 @@
 <% layout ("/layouts/boilerplate.ejs")%>
 
 <body>
-  <%if(createdFlash){%>
-      <div class="alert alert-success flash-alert text-center  d-flex justify-content-center" role="alert">
-        <%=createdFlash%>
-      </div>
-    <% } %>
-  <%if(deletedFlash){%>
-      <div class="alert alert-success flash-alert text-center d-flex justify-content-center"  role="alert">
-        <%=deletedFlash%>
-      </div>
-    <% } %>
+  
   <div class="list-box ">
     <% for(list of lists){%>
     <a href="/list/<%=list._id%>" class="card-box text-decoration-none">
