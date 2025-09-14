@@ -1,3 +1,6 @@
+.logo img {
+  width: 150px;
+}
 .navbar {
   z-index: 2;
   background-color: white !important;
@@ -91,6 +94,7 @@
 .form {
   display: flex;
   justify-content: flex-end;
+  height: 50vh;
 }
 .form div {
   width: 70%;
