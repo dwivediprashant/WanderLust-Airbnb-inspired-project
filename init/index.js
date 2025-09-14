@@ -17,7 +17,7 @@ let initData = async () => {
   await List.deleteMany({});
   let listWithOwner = data.map((obj) => ({
     ...obj,
-    owner: "68c0dba4e4822bc62636a8cb",
+    owner: "68c6ff6538aab2d20ceb221c",
   }));
   await List.insertMany(listWithOwner);
   console.log("data added to DB successfully.");
