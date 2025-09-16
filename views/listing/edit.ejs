@@ -8,6 +8,7 @@
       action="/list/<%=list._id%>?_method=PUT"
       novalidate
       class="needs-validation"
+      enctype="multipart/form-data"
     >
       <div>
         <label for="title" class="form-label">Title</label>
@@ -65,7 +66,7 @@
         <div class="invalid-feedback">Invalid location</div>
       </div>
       <div>
-        <label for="country" class="form-label"></label>
+        <label for="country" class="form-label">Country</label>
         <input
           class="form-control"
           name="country"
@@ -76,16 +77,18 @@
         <div class="valid-feedback">Valid country</div>
         <div class="invalid-feedback">Invalid country</div>
       </div>
-      <div>
-        <label for="image" class="form-label">Image url</label>
-        <input
-          name="image"
-          class="form-control"
-          id="image"
-          type="text"
-          value="<%= list.image %>"
-          placeholder="Enter image url"
+
+      <div class="mt-3">
+        <img
+          src="<%= list.image.url %>"
+          alt="image-preview"
+          style="width: 200px; height: 200px; filter: blur(1px)"
         />
+      </div>
+      <p>Older image looks like above image</p>
+      <div>
+        <label for="image" class="form-label">Upload new image</label>
+        <input name="image" class="form-control" id="image" type="file" />
       </div>
 
       <button class="btn btn-outline-success mt-3">Save</button>

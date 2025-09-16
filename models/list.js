@@ -4,13 +4,7 @@ const listSchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
   image: {
-    type: String,
-    default:
-      "https://www.imghotels.com/wp-content/uploads/img-hotels-IADGV_006-Dusk-Exterior-home.jpg",
-    set: (link) =>
-      link === ""
-        ? "https://www.imghotels.com/wp-content/uploads/img-hotels-IADGV_006-Dusk-Exterior-home.jpg"
-        : link,
+    url: { type: String },
   },
   price: { type: Number },
   location: { type: String },

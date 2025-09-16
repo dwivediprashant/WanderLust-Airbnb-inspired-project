@@ -17,19 +17,19 @@ module.exports.addForm = (req, res) => {
 //-post(list) ---------create route----------
 module.exports.createNewList = async (req, res, next) => {
   try {
-    let { title, description, price, location, country, image } = req.body;
+    let { title, description, price, location, country } = req.body;
     let newList = new List({
       title,
       description,
       price,
       location,
       country,
-      image,
     });
+    newList.image.url = req.cloudinaryResult?.secure_url;
     newList.owner = req.session.user._id; //current user ki id
     await newList.save();
     console.log(newList, " added succesfully!");
-    console.log(req.session, " request object");
+    // console.log(req.session, " request object");
     req.flash("success", "New list added successfully !");
     res.redirect("/list");
   } catch (err) {
@@ -42,6 +42,11 @@ module.exports.getEditForm = async (req, res, next) => {
   try {
     let { id } = req.params;
     let list = await List.findById(id);
+    // let originalImgUrl = list.image.url;
+    // let modifiedImgUrl = originalImgUrl.replace(
+    //   "/upload",
+    //   "/upload/h_200,w_200"
+    // );
     res.render("listing/edit.ejs", { list });
   } catch (err) {
     // console.log(err);
@@ -52,8 +57,8 @@ module.exports.getEditForm = async (req, res, next) => {
 module.exports.updateList = async (req, res, next) => {
   try {
     let { id } = req.params;
-    let { title, description, price, location, country, image } = req.body;
-    await List.findByIdAndUpdate(
+    let { title, description, price, location, country } = req.body;
+    let list = await List.findByIdAndUpdate(
       id,
       {
         title,
@@ -61,10 +66,13 @@ module.exports.updateList = async (req, res, next) => {
         price,
         location,
         country,
-        image,
       },
       { runValidators: true, new: true }
     );
+    if (req.cloudinaryResult) {
+      list.image.url = req.cloudinaryResult?.secure_url;
+      await list.save();
+    }
     req.flash("success", "List updated successfully !");
     res.redirect(`/list/${id}`);
   } catch (err) {

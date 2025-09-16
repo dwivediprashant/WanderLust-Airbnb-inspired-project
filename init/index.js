@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const data = require("./data.js");
+const { data } = require("./data.js");
 const List = require("../models/list.js");
 
 main()

@@ -2,7 +2,13 @@
 <body>
   <h1 style="text-align: center">Add your place</h1>
   <div class="add-place">
-    <form method="post" action="/list" novalidate class="needs-validation">
+    <form
+      method="post"
+      action="/list"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
       <div>
         <label for="title" class="form-label">Title</label>
         <input
@@ -71,14 +77,15 @@
         <div class="valid-feedback">Valid country</div>
         <div class="invalid-feedback">Invalid country</div>
       </div>
+
       <div>
         <label for="image" class="form-label">Image url</label>
         <input
           name="image"
           class="form-control"
           id="image"
-          type="text"
-          placeholder="Enter image url"
+          type="file"
+          required
         />
       </div>
       <button class="btn btn-outline-danger mt-3">Add</button>
