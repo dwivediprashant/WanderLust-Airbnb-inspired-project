@@ -130,5 +130,16 @@
       </div>
       <%}}%>
     </div>
+
+    <div class="map">
+      <h3>Location</h3>
+      <div id="map"></div>
+    </div>
   </div>
+  <script>
+    const mapToken = "<%=process.env.MAP_TOKEN%>";
+    const loc = "<%=list.location%>";
+  </script>
+
+  <script src="/js/map.js"></script>
 </body>

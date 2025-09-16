@@ -100,7 +100,7 @@ module.exports.showList = async (req, res, next) => {
     let { id } = req.params;
     let list = await List.findById(id)
       .populate({ path: "reviews", populate: { path: "revOwner" } })
-      .populate("owner");
+      .populate({ path: "owner", select: "-password" });
     console.log(list);
     res.render("listing/show.ejs", {
       list,

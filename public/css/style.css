@@ -99,3 +99,7 @@
 .form div {
   width: 70%;
 }
+#map {
+  height: 400px;
+  width: 100%;
+}
