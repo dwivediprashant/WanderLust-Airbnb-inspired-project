@@ -16,8 +16,8 @@ maptilerClient.config.apiKey = mapToken;
       projectionControl: true,
     });
 
-    const popup = new maptilersdk.Popup({ offset: 25 }).setText(
-      "Construction on the Washington Monument began in 1848."
+    const popup = new maptilersdk.Popup({ offset: 5 }).setHTML(
+      `<h3>${title}</h3><p>Exact location will be provided after booking</p>`
     );
     new maptilersdk.Marker({ color: "red" })
       .setLngLat([lng, lat])

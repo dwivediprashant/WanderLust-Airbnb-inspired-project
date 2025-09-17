@@ -11,6 +11,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const User = require("./models/user.js");
 const bcrypt = require("bcrypt");
@@ -20,7 +21,8 @@ const listRouter = require("./routes/list.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const List = require("./models/list.js");
-
+//atlas db url--
+const dbUrl = process.env.ATLAS_DB_URL;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -38,16 +40,29 @@ main()
     console.log(err);
   });
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+  await mongoose.connect(dbUrl);
 }
+//----------mongo connect session store------
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+  touchAfter: 24 * 60 * 60, //seconds
+});
+
+store.on("error", (err) => {
+  console.log("mongo store error", err);
+});
 //------session cookie setup--------------------
 app.use(
   session({
-    secret: "mysecretcode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, //in millisec
       httpOnly: true,
     },
   })
