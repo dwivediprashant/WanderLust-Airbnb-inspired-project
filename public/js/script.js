@@ -30,3 +30,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4000);
   }
 });
+
+//---------for tax toggler----------------
+const taxInfo = document.querySelectorAll(".tax-info");
+const taxToggler = document.querySelector("#switchCheckReverse");
+
+taxToggler.addEventListener("click", () => {
+  taxInfo.forEach((tax) => {
+    if (taxToggler.checked) {
+      tax.style.display = "inline"; // show
+    } else {
+      tax.style.display = "none"; // hide
+    }
+  });
+});

@@ -25,7 +25,8 @@ router
 
 //-------/new  all reequests------
 router.route("/new").get(isLogin, listControllers.addForm);
-
+//---- /category/:category req for filtering ---
+router.route("/category/:category").get(listControllers.filterList);
 //--------edit route-------
 router.route("/:id/edit").get(isLogin, isOwner, listControllers.getEditForm);
 //------/:id ki all req route----------

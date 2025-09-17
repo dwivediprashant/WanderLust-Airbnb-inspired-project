@@ -19,6 +19,10 @@ const listSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  category: {
+    type: String,
+    enum: ["room", "mountain", "pool", "camp", "farm", "arctic", "nature"],
+  },
 });
 
 listSchema.post("findOneAndDelete", async (list) => {

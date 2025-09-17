@@ -11,16 +11,27 @@
       />
     </div>
     <div class="card-body">
-      <p class="card-text"><%=list.title%></p>
-      <p class="card-text">
-        Listed by <i><b><%= list.owner.username %></b></i>
-      </p>
+      <div class="d-flex justify-content-between mb-1">
+        <p class="card-text"><%=list.title%></p>
+
+        <button type="button" class="btn btn-outline-dark border-0 p-0 tag">
+          <span class="badge text-bg-secondary"
+            ><i class="fa-solid fa-user"></i
+          ></span>
+          <i><b><%=list.owner.username%></b></i>
+        </button>
+      </div>
+
       <p class="card-text"><%=list.description%></p>
       <p class="card-text">
         &#8377; <%=list.price.toLocaleString("en-IN")%>/night
       </p>
       <p class="card-text"><%=list.location%></p>
       <p class="card-text"><%=list.country%></p>
+      <button type="button" class="btn btn-outline-dark border-0 p-0 tag">
+        <span class="badge text-bg-secondary mb-2">#</span>
+        <%=list.category %>
+      </button>
     </div>
 
     <% if(currUser && currUser._id == list.owner._id){ %>

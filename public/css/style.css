@@ -2,7 +2,7 @@
   width: 150px;
 }
 .navbar {
-  z-index: 2;
+  z-index: 9999;
   background-color: white !important;
   color: black !important;
   height: 5rem;
@@ -89,7 +89,7 @@
   top: 5px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 1000000;
 }
 .form {
   display: flex;
@@ -102,4 +102,57 @@
 #map {
   height: 400px;
   width: 100%;
+}
+.fil-contain {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.filters {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 1rem;
+  padding: 1rem;
+}
+.filter {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  opacity: 1;
+  margin-right: 3rem;
+}
+.filters .filter:hover {
+  transition-duration: 0.25s;
+  cursor: pointer;
+  opacity: 0.65;
+  transform: scale(1.1);
+}
+.filter p {
+  font-size: 0.9rem;
+}
+.search input {
+  width: 500px;
+  border-radius: 4rem;
+}
+.search .btn {
+  display: flex;
+  align-items: center;
+  border-radius: 4rem;
+  padding: 0 1rem 0 1rem;
+}
+.tax-info {
+  display: none;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  padding: 0 1rem 0 1rem;
+  border-radius: 2rem;
+}
+.tag:hover {
+  background-color: white;
+  color: black;
 }

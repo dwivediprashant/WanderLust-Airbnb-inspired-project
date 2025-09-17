@@ -6,6 +6,10 @@ const listSchema = joi.object({
   price: joi.number().min(1).required(),
   location: joi.string().required(),
   country: joi.string().required(),
+  category: joi
+    .string()
+    .valid("room", "mountain", "pool", "camp", "farm", "arctic", "nature")
+    .required(),
 });
 
 module.exports = listSchema;

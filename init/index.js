@@ -15,11 +15,12 @@ async function main() {
 
 let initData = async () => {
   await List.deleteMany({});
-  let listWithOwner = data.map((obj) => ({
+  let listWithOwnerNcat = data.map((obj) => ({
     ...obj,
     owner: "68c6ff6538aab2d20ceb221c",
+    category: "room",
   }));
-  await List.insertMany(listWithOwner);
+  await List.insertMany(listWithOwnerNcat);
   console.log("data added to DB successfully.");
 };
 

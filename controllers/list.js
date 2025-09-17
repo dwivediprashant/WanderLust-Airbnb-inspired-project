@@ -17,13 +17,14 @@ module.exports.addForm = (req, res) => {
 //-post(list) ---------create route----------
 module.exports.createNewList = async (req, res, next) => {
   try {
-    let { title, description, price, location, country } = req.body;
+    let { title, description, price, location, country, category } = req.body;
     let newList = new List({
       title,
       description,
       price,
       location,
       country,
+      category,
     });
     newList.image.url = req.cloudinaryResult?.secure_url;
     newList.owner = req.session.user._id; //current user ki id
@@ -57,7 +58,7 @@ module.exports.getEditForm = async (req, res, next) => {
 module.exports.updateList = async (req, res, next) => {
   try {
     let { id } = req.params;
-    let { title, description, price, location, country } = req.body;
+    let { title, description, price, location, country, category } = req.body;
     let list = await List.findByIdAndUpdate(
       id,
       {
@@ -66,6 +67,7 @@ module.exports.updateList = async (req, res, next) => {
         price,
         location,
         country,
+        category,
       },
       { runValidators: true, new: true }
     );
@@ -107,6 +109,22 @@ module.exports.showList = async (req, res, next) => {
     });
   } catch (err) {
     // console.log(err);
+    next(err);
+  }
+};
+///--filter --------
+module.exports.filterList = async (req, res, next) => {
+  try {
+    let { category } = req.params;
+    if (category == "trending") {
+      let lists = await List.find({ category });
+      return res.render("listing/list.ejs", { lists });
+    }
+    let lists = await List.find({ category }).sort({ _id: -1 });
+    console.log(lists);
+    // res.send(lists);
+    res.render("listing/list.ejs", { lists });
+  } catch (err) {
     next(err);
   }
 };

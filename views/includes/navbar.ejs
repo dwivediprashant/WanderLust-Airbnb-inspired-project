@@ -1,12 +1,16 @@
 <nav class="navbar navbar-expand-md bg-body-tertiary">
-  <div class="container">
+  <div class="container d-flex justify-content-center">
     <div class="d-flex align-items-center">
       <a class="navbar-brand" href="/list"
         ><i class="fa-solid fa-compass"></i
         ><span style="color: #fe424d">wander</span
         ><span style="color: black">Lust</span></a
       >
+      <div class="navbar-nav">
+        <a class="nav-link" href="/list">Explore</a>
+      </div>
     </div>
+
     <button
       class="navbar-toggler"
       type="button"
@@ -18,17 +22,29 @@
     >
       <span class="navbar-toggler-icon bg-body-light"></span>
     </button>
+    <div class="navbar-nav search ms-5">
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search destination"
+        />
+        <button class="btn btn-danger" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>Search
+        </button>
+      </form>
+    </div>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/list">All list</a>
-        <a class="nav-link" href="/list/new">Add new list</a>
-      </div>
       <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/list/new">Add new place</a>
         <% if(!currUser){ %>
-        <a class="nav-link" href="/register">Signup</a>
-        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/register"><b>Signup</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
         <% } %> <% if(currUser){ %>
-        <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link" href="/logout"
+          ><b>Logout</b
+          ><i class="fa-solid fa-right-from-bracket text-danger"></i
+        ></a>
         <% } %>
       </div>
     </div>

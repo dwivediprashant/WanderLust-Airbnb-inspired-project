@@ -65,7 +65,14 @@ app.use((req, res, next) => {
 app.use("/list", listRouter);
 app.use("/list/:id/review", reviewRouter);
 app.use("/", userRouter);
-
+//-------filter routes------
+app.get("/list/:category", async (req, res) => {
+  let { category } = req.params;
+  console.log(category);
+  const list = await List.find({ category });
+  console.log(list);
+  res.send("success");
+});
 //--------------no route matched page not found!--------
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page not found!"));
