@@ -6,6 +6,38 @@ WanderLust is an Airbnb-inspired rental listing platform built with Node.js, Exp
 
 - https://wanderlust-airbnb-inspired-project-qs8g.onrender.com/list
 
+## Snapshots
+
+- Explore page
+
+  <img width="1891" height="967" alt="Screenshot 2026-05-18 063309" src="https://github.com/user-attachments/assets/f4a9483a-9436-4555-9283-0ce7aa81e7b6" />
+
+- Detailed view of place
+
+  <img width="1756" height="860" alt="Screenshot 2026-05-18 063543" src="https://github.com/user-attachments/assets/d42ee10d-b28f-44f2-9adb-fdd100695a6b" />
+
+- Review for place
+
+  <img width="1160" height="860" alt="Screenshot 2026-05-18 063652" src="https://github.com/user-attachments/assets/1c017b11-aca5-4f8a-9055-377be2d0f718" />
+
+- Globe map view
+
+  <img width="1100" height="652" alt="Screenshot 2026-05-18 063849" src="https://github.com/user-attachments/assets/bb1e093f-f7fb-4e2c-bb0d-01fc0f911c3f" />
+
+- Flash notification in app
+
+  <img width="1701" height="159" alt="Screenshot 2026-05-18 064059" src="https://github.com/user-attachments/assets/ff01e98f-590d-416e-9931-26052f5223f1" />
+
+- Add place form
+
+  <img width="1006" height="880" alt="Screenshot 2026-05-18 064141" src="https://github.com/user-attachments/assets/ac9a365d-1362-4b3b-8cb9-cd80263b4054" />
+  
+
+
+
+
+
+
 ## Feature Map
 
 | Feature                           | Tools / Files Used                                                                                                                                                                           |
