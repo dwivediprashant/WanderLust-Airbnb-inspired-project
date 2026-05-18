@@ -10,12 +10,10 @@ module.exports.createReview = async (req, res, next) => {
       rating,
     });
     newReview.revOwner = req.session.user._id;
-    // console.log(newReview);
     list.reviews.push(newReview);
 
     await newReview.save();
     await list.save();
-    // console.log(list);
     req.flash("success", "Review added successfully !");
     res.redirect(`/list/${list._id}`);
   } catch (err) {
@@ -35,7 +33,6 @@ module.exports.destroyReview = async (req, res) => {
       { runValidators: true, new: true }
     );
     let deletedReview = await Review.findByIdAndDelete(reviewId);
-    console.log(deletedReview, " is deleted review");
     // console.log(pulledReviews, " is pulled reviews");
     req.flash("success", "Review deleted successfully !");
     res.redirect(`/list/${id}`);

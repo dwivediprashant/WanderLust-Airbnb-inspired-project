@@ -33,12 +33,8 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 
 main()
-  .then(() => {
-    console.log("connected to DB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  .then(() => {})
+  .catch((err) => {});
 async function main() {
   await mongoose.connect(dbUrl);
 }
@@ -51,9 +47,7 @@ const store = MongoStore.create({
   touchAfter: 24 * 60 * 60, //seconds
 });
 
-store.on("error", (err) => {
-  console.log("mongo store error", err);
-});
+store.on("error", (err) => {});
 //------session cookie setup--------------------
 app.use(
   session({
@@ -83,9 +77,7 @@ app.use("/", userRouter);
 //-------filter routes------
 app.get("/list/:category", async (req, res) => {
   let { category } = req.params;
-  console.log(category);
   const list = await List.find({ category });
-  console.log(list);
   res.send("success");
 });
 //--------------no route matched page not found!--------
@@ -99,6 +91,4 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("errorlog/error.ejs", { statusCode, message });
 });
 //---------------listen server at port 8080--------
-app.listen(port, () => {
-  console.log(`server running at port ${port}`);
-});
+app.listen(port, () => {});

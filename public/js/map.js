@@ -26,6 +26,5 @@ maptilerClient.config.apiKey = mapToken;
 
     // console.log("Latitude:", lat, "Longitude:", lng, "marker : ", marker);
   } else {
-    console.log("No results found for", loc);
   }
 })();

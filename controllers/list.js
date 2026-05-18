@@ -2,7 +2,6 @@ const List = require("../models/list");
 //-index-----
 module.exports.index = async (req, res, next) => {
   try {
-    // console.log(res.locals.currUser);
     const lists = await List.find().sort({ _id: -1 });
     res.render("listing/list", { lists });
   } catch (err) {
@@ -29,12 +28,9 @@ module.exports.createNewList = async (req, res, next) => {
     newList.image.url = req.cloudinaryResult?.secure_url;
     newList.owner = req.session.user._id; //current user ki id
     await newList.save();
-    console.log(newList, " added succesfully!");
-    // console.log(req.session, " request object");
     req.flash("success", "New list added successfully !");
     res.redirect("/list");
   } catch (err) {
-    // console.log(err);
     next(err);
   }
 };
@@ -50,7 +46,6 @@ module.exports.getEditForm = async (req, res, next) => {
     // );
     res.render("listing/edit.ejs", { list });
   } catch (err) {
-    // console.log(err);
     next(err);
   }
 };
@@ -78,7 +73,6 @@ module.exports.updateList = async (req, res, next) => {
     req.flash("success", "List updated successfully !");
     res.redirect(`/list/${id}`);
   } catch (err) {
-    // console.log(err);
     next(err);
   }
 };
@@ -88,11 +82,9 @@ module.exports.destroyList = async (req, res, next) => {
     let { id } = req.params;
     let deletedList = await List.findByIdAndDelete(id);
 
-    console.log(deletedList, "deleted successfully!");
     req.flash("success", "List deleted successfully !");
     res.redirect("/list");
   } catch (err) {
-    // console.log(err);
     next(err);
   }
 };
@@ -103,12 +95,10 @@ module.exports.showList = async (req, res, next) => {
     let list = await List.findById(id)
       .populate({ path: "reviews", populate: { path: "revOwner" } })
       .populate({ path: "owner", select: "-password" });
-    console.log(list);
     res.render("listing/show.ejs", {
       list,
     });
   } catch (err) {
-    // console.log(err);
     next(err);
   }
 };
@@ -121,7 +111,6 @@ module.exports.filterList = async (req, res, next) => {
       return res.render("listing/list.ejs", { lists });
     }
     let lists = await List.find({ category }).sort({ _id: -1 });
-    console.log(lists);
     // res.send(lists);
     res.render("listing/list.ejs", { lists });
   } catch (err) {

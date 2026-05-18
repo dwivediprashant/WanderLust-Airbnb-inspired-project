@@ -17,7 +17,6 @@ module.exports.regUser = async (req, res, next) => {
     req.flash("success", "THANK YOU FOR REGISTERING NOW YOU CAN LOGIN ");
     res.redirect("/login");
   } catch (err) {
-    // console.log(err);
     req.flash(
       "error",
       `Username with ${err.keyValue.username} already exists. Try different username !`
@@ -34,11 +33,9 @@ module.exports.getLoginForm = (req, res) => {
 module.exports.loginUser = (req, res, next) => {
   try {
     const { username } = req.body;
-    console.log(req.session);
     req.flash("success", `welcome ${username} !`.toUpperCase());
     res.redirect("/list");
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
